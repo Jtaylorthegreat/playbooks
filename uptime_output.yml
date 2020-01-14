@@ -1,0 +1,16 @@
+---
+ - hosts: all
+   tasks:
+    - name: uptime
+      register: uptime_output
+      command: uptime
+      ignore_errors: true
+    - debug: msg="Host {{ inventory_hostname}} {{ uptime_output.stdout_lines }}"
+    - name: log uptime
+      lineinfile:
+        line: "Host {{ inventory_hostname }} {{ uptime_output.stdout_lines }}"
+        insertafter: EOF
+        dest: ./output.txt
+        create: true
+      delegate_to: localhost
+      loop: "{{ groups.all }}"
