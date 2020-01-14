@@ -1,0 +1,7 @@
+---
+ - hosts: all
+   tasks:
+    - name: df -h
+      register: df_output
+      command: df -h
+    - debug: msg="{{ df_output.stdout_lines }}"
