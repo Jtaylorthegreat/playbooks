@@ -1,0 +1,26 @@
+---
+   - hosts: all
+
+     tasks:
+       - name: user_management | check if user exists
+         become: true
+         shell: id -u USERHERE
+         register: checkuser_exists
+         ignore_errors: true
+
+       - name: user_management | update user password
+         become: true
+         user:
+           name: USERHERE
+           password: PASS-HASH-HERE
+           update_password: always
+           groups: wheel
+         when: checkuser_exists.rc == 0
+
+       - name: user_management | Create user
+         become: true
+         user:
+           name: USERHERE
+           password: PASS-HASH-HERE
+           groups: wheel
+         when: checkuser_exists.rc !=0
