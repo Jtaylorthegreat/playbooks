@@ -16,3 +16,11 @@ uptime_output.yml :
 hdd_space.yml :
 
     display "df -h" command stdout to terminal during runtime
+
+remove_user_list.yml :
+  
+    remove list of users from nodes
+    
+remove_user.yml :
+
+    remove single user from nodes
