@@ -2,9 +2,13 @@
 - hosts: all
   vars:
     setuserinfo:
+#-----------------------------------------------------------
+#Set user variables here:
+
       set-user-name: USERHERE
       set-user-password: PASS-HASH-HERE
       set-user-group: (insert wheel or leave blank)
+#-----------------------------------------------------------
   tasks:
     - name: user_management | check if user exists
       become: true
