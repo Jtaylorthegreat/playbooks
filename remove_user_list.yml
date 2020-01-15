@@ -1,0 +1,18 @@
+---
+- hosts: all
+  vars:
+    removeusers:
+#-----------------------------------------------------------
+#Set users to remove here:
+
+      - 'USERNAMEHERE'
+      - 'USERNAMEHERE'
+#-----------------------------------------------------------
+  tasks:
+   - name: remove users
+     become: true
+     user:
+       name: '{{ item }}'
+       state: absent
+       remove: yes
+     loop: "{{ removeusers }}"
