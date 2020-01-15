@@ -24,3 +24,4 @@
 
     - name: remove_user | no user exist
       debug: msg="User {{setuserinfo['set-user-name'] }} does not exist on system"
+      when: checkuser_exists.rc !=0
