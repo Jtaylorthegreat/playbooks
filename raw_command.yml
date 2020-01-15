@@ -1,0 +1,18 @@
+---
+ - hosts: MYHOSTS
+   vars:
+     setcmd:
+#-----------------------------------------------------------
+#Set Command Here:
+
+       cmdvar: MYCOMMMAND
+
+#-----------------------------------------------------------
+   tasks:
+    - name: run custom command
+      become: true
+      register: command_output
+      raw: "{{setcmd['cmdvar'] }}"
+      args:
+        executable: /bin/bash
+    - debug: msg="{{ command_output.stdout_lines }}"
