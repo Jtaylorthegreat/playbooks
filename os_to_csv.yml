@@ -26,5 +26,4 @@
         dest: ./os-list.csv
         line: "{{ item }}, {{ hostvars[item].available }}, {% if hostvars[item].available %} {{ hostvars[item].ansible_distribution }}{{ hostvars[item].ansible_distribution_version }} {% endif %}"
         regexp: "Host: {{ item }}"
-        create: true
       loop: "{{ groups.all }}"
