@@ -1,0 +1,26 @@
+---
+- hosts: all
+  vars:
+    setuserinfo:
+#-----------------------------------------------------------
+#Set user to remove here:
+
+      set-user-name: USERNAMEHERE
+#-----------------------------------------------------------
+  tasks:
+    - name: remove_user | check if user exists
+      become: true
+      shell: "id -u {{setuserinfo['set-user-name'] }}"
+      register: checkuser_exists
+      ignore_errors: true
+
+    - name: remove_user | remove existing user
+      become: true
+      user:
+        name: "{{setuserinfo['set-user-name'] }}"
+        state: absent
+        remove: yes
+      when: checkuser_exists.rc == 0
+
+    - name: remove_user | no user exist
+      debug: msg="User {{setuserinfo['set-user-name'] }} does not exist on system"
