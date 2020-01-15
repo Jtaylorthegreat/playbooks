@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - delegate_to: localhost
+      command: ping -c1 "{{ hostvars[inventory_hostname].ansible_host|default(inventory_hostname) }}"
+      register: ping
+      ignore_errors: true
+
+    - set_fact:
+        available: "{{ ping.rc == 0 }}"
+
+    - setup:
+      when: ping.rc == 0
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: write header line
+      lineinfile:
+        dest: ./os-list.csv
+        line: "Host,  Online,  OSVersion"
+        create: true
+    - name: populate os-list
+      lineinfile:
+        dest: ./os-list.csv
+        line: "{{ item }}, {{ hostvars[item].available }}, {% if hostvars[item].available %} {{ hostvars[item].ansible_distribution }}{{ hostvars[item].ansible_distribution_version }} {% endif %}"
+        regexp: "Host: {{ item }}"
+        create: true
+      loop: "{{ groups.all }}"
