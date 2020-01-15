@@ -24,3 +24,7 @@ remove_user_list.yml :
 remove_user.yml :
 
     remove single user from nodes
+
+raw_command.yml :
+
+    run raw command 
