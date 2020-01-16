@@ -16,14 +16,14 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    - name: write header line
+    - name: write csv header line
       lineinfile:
         dest: ./os-list.csv
-        line: "Host,  Online,  OSVersion"
+        line: "Host,  Online, Reported-Hostname, IPv4-Addresses, OS-Version, Kernel"
         create: true
     - name: populate os-list
       lineinfile:
         dest: ./os-list.csv
-        line: "{{ item }}, {{ hostvars[item].available }}, {% if hostvars[item].available %} {{ hostvars[item].ansible_distribution }}{{ hostvars[item].ansible_distribution_version }} {% endif %}"
+        line: "{{ item }}, {{ hostvars[item].available }}, {% if hostvars[item].available %} {{ hostvars[item].ansible_hostname }}, {{hostvars[item].ansible_all_ipv4_addresses}}, {{ hostvars[item].ansible_distribution }} {{ hostvars[item].ansible_distribution_version }}, {{ hostvars[item].ansible_kernel }} {% endif %}"
         regexp: "Host: {{ item }}"
       loop: "{{ groups.all }}"
