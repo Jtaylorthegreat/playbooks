@@ -26,5 +26,7 @@
         dest: ./os-list.csv
         line: '{{ item }}, {{ hostvars[item].available }}, {% if hostvars[item].available %} {{ hostvars[item].ansible_hostname }}, "{{hostvars[item].ansible_all_ipv4_addresses}}", {{ hostvars[item].ansible_distribution }} {{ hostvars[item].ansible_distribution_version }}, {{ hostvars[item].ansible_kernel }} {% endif %}'
         regexp: "Host: {{ item }}"
-      loop: "{{ groups.all }}"
       ignore_errors: true
+      #Make sure group set here in loop matches group set on hosts line up top, otherwise errors may throw
+      #ex. loop: "{{ groups.MYGROUPHERE }}"
+      loop: "{{ groups.all }}"
