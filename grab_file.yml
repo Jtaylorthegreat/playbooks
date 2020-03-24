@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - shell: ls /home/remoteuser/*.report
+      register: report_to_grab
+    - shell: ls /home/remoteuser/*.report | rev | awk -v FS='/' '{print $1}' | rev
+      register: report_name
+    - fetch: src={{ item }} dest=/home/localuser/reports/{{ report_name.stdout_lines}}
+      with_items: "{{ report_to_grab.stdout_lines }}"
+
