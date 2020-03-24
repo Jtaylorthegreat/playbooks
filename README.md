@@ -28,3 +28,15 @@ remove_user.yml :
 raw_command.yml :
 
     run raw command 
+    
+simple-file-stage.yml :
+
+    copy 2 local files to remote servers
+    
+grab_file.yml :
+
+    grab report files from remote servers (following $IP.report naming convention)
+    
+mass-cve-check.yml :
+
+    after creating a local list of cves, this playbook will copy the cvelist to all remote servers and check to see which ones were patched
