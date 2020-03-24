@@ -1,0 +1,12 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - copy:
+        src: /home/user/file1
+        dest: /home/user/file1
+    - copy:
+        src: /home/user/file2
+        dest: /home/user/file2
+
+
